@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body>
+
+  <div class="container p-4">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <div class="card card-body">
+          <h3>Upload a File</h3>
+          <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="file">Choose a file</label>
+              <input type="file" name="upload" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

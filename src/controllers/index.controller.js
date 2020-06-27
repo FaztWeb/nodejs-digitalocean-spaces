@@ -1,7 +1,14 @@
 const fs = require("fs");
 const { upload, s3 } = require("../lib/multer");
-const { bucketName } = require("../config");
 const path = require("path");
+
+const { BUCKET_NAME } = process.env;
+
+const renderIndex = (req, res) => {
+  res.render("upload", {
+    title: "Upload an Image",
+  });
+};
 
 const uploadFile = (req, res) => {
   upload(req, res, (err) => {
@@ -19,12 +26,13 @@ const getFiles = async (req, res) => {
   try {
     const data = await s3
       .listObjects({
-        Bucket: bucketName,
+        Bucket: BUCKET_NAME,
       })
       .promise();
-    console.log(data);
+    console.log({ data });
     res.render("files", {
       Contents: data.Contents,
+      title: 'Getting Files'
     });
   } catch (error) {
     console.log(error);
@@ -38,7 +46,7 @@ const getSingleFile = async (req, res) => {
     // fetching objects from bucket
     const data = await s3
       .getObject({
-        Bucket: bucketName,
+        Bucket: BUCKET_NAME,
         Key: filename,
       })
       .promise();
@@ -55,6 +63,7 @@ const getSingleFile = async (req, res) => {
 };
 
 module.exports = {
+  renderIndex,
   uploadFile,
   getFiles,
   getSingleFile,

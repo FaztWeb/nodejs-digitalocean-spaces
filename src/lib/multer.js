@@ -2,9 +2,9 @@ const aws = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 
-const { S3Endpoint, bucketName } = require('../config');
+const { S3_ENDPOINT, BUCKET_NAME } = process.env;
 
-const spacesEndpoint = new aws.Endpoint(S3Endpoint);
+const spacesEndpoint = new aws.Endpoint(S3_ENDPOINT);
 
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
@@ -13,7 +13,7 @@ const s3 = new aws.S3({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: bucketName,
+    bucket: BUCKET_NAME,
     metadata: (req, file, cb) => {
       cb(null, {
         fieldName: file.fieldname,
@@ -26,4 +26,4 @@ const upload = multer({
   }),
 }).array("upload", 1);
 
-module.exports = { upload , s3 };
+module.exports = { upload, s3 };

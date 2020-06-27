@@ -1,17 +1,14 @@
 const { Router } = require("express");
 const router = Router();
 
-const {
-  uploadFile,
-  getFiles,
-  getSingleFile,
-} = require("../controllers/index.controller");
+const indexCtrl = require("../controllers/index.controller");
 
+router.get("/", indexCtrl.renderIndex);
 
-router.post("/upload", uploadFile);
+router.post("/upload", indexCtrl.uploadFile);
 
-router.get("/files", getFiles);
+router.get("/files", indexCtrl.getFiles);
 
-router.get("/file/:filename", getSingleFile);
+router.get("/file/:filename", indexCtrl.getSingleFile);
 
 module.exports = router;
