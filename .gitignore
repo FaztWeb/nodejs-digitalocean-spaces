@@ -1,2 +1,8 @@
-src/public/files
+# Node
 node_modules
+
+# Public
+src/public/files
+
+# Environment Variables
+.env
