@@ -14,6 +14,7 @@ const upload = multer({
   storage: multerS3({
     s3,
     bucket: BUCKET_NAME,
+    acl: 'public-read',
     metadata: (req, file, cb) => {
       cb(null, {
         fieldName: file.fieldname,
@@ -24,6 +25,7 @@ const upload = multer({
       cb(null, file.originalname);
     },
   }),
-}).array("upload", 1);
+}).single("upload");
+
 
 module.exports = { upload, s3 };

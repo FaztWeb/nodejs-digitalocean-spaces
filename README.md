@@ -27,3 +27,4 @@ docker-compose up
 # Resouces
 * [Bootswatch CDN](https://www.bootstrapcdn.com/bootswatch/)
 * [Setup AWS Credentials Documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html)
+* [Multer S3](https://www.npmjs.com/package/multer-s3)

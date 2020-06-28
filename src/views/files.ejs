@@ -2,18 +2,28 @@
 <html lang="en">
 
 <head>
-  <%- include('partials/head.ejs') %>
+    <%- include('partials/head.ejs') %>
 </head>
 
 <body>
 
-    <ul>
-        <% Contents.forEach(function(c) { %>
-        <li>
-            <a href="/file/<%= c.Key %>"><%= c.Key %></a>
-        </li>
-        <% })%>
-    </ul>
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-md-4">
+                <%- include('./partials/panel.ejs') %>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <% images.forEach(function(image) { %>
+                    <div class="col-md-4">
+                        <img src="<%= image.url %>" alt="Image" class="img-fluid">
+                    </div>
+                    <% })%>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </body>
 

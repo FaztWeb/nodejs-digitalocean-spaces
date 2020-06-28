@@ -1,38 +1,41 @@
 const fs = require("fs");
-const { upload, s3 } = require("../lib/multer");
 const path = require("path");
+const { upload, s3 } = require("../lib/multer");
+
+const Image = require("../models/Image");
 
 const { BUCKET_NAME } = process.env;
 
+// Render the default Index Page
 const renderIndex = (req, res) => {
   res.render("upload", {
     title: "Upload an Image",
   });
 };
 
-const uploadFile = (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      console.log(err);
-      return res.send("error!");
-    }
-    console.log("File succssefully uploaded");
-    // res.send('Uploaded!');
-    res.redirect("files");
-  });
+// Upload File Router Handler
+const uploadFile = async (req, res) => {
+  // show the uploaded file information
+  console.log(req.file);
+
+  // Saving the Image URL in Database
+  const newImage = new Image();
+  newImage.url = req.file.location;
+  await newImage.save();
+
+  // Redirect to the initial page
+  res.redirect("/files");
 };
 
+// Get all files
 const getFiles = async (req, res) => {
   try {
-    const data = await s3
-      .listObjects({
-        Bucket: BUCKET_NAME,
-      })
-      .promise();
-    console.log({ data });
+    const images = await Image.find();
+    console.log(images);
+
     res.render("files", {
-      Contents: data.Contents,
-      title: 'Getting Files'
+      images,
+      title: "Getting Files",
     });
   } catch (error) {
     console.log(error);
